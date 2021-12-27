@@ -145,9 +145,4 @@ def search():
         return jsonify({'error': 'Missing Data'}), 400
     return jsonify({'error': 'Missing Data'}), 400
 
-
-# @APP.route('/', methods=['GET'])
-# @APP.route('/', methods=['GET'])
-# @APP.route('/', methods=['GET'])
-# @APP.route('/')
 APP.run(host="localhost", port=8080)
