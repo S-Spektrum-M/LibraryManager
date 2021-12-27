@@ -38,6 +38,8 @@ def add_book():
                 SECTION = DATA[3]
                 SUBSECTION = DATA[4]
                 BOOKS[CODE] = {
+                    'available': True,
+                    'checked_out_by': 'none',
                     'title': TITLE,
                     'author': AUTHOR,
                     'section': SECTION,
@@ -117,7 +119,20 @@ def owner():
         return jsonify({'error': 'Book Not Found'}), 400
     return jsonify({'error': 'Missing Data'}), 400
 
-
+@APP.route('/search', methods=['GET'])
+def search():
+    FILE = open('dbs/books.json', 'r')
+    BOOKS = json.load(FILE)
+    FILE.close()
+    """
+    url/search?data=<title>
+    """
+    if 'data' in request.args:
+        data = request.args['data']
+        if data in BOOKS:
+            return jsonify({'message': 'found'}), 200
+        return jsonify({'error': 'Book Not Found'}), 400
+    return jsonify({'error': 'Missing Data'}), 400
 # @APP.route('/', methods=['GET'])
 # @APP.route('/', methods=['GET'])
 # @APP.route('/', methods=['GET'])
