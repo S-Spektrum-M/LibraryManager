@@ -1,7 +1,8 @@
 ```json
 {
-    code: {
-        checkedOut: boolean
+    "code": {
+        "availabe": true
+        "checked_out_by": "none"
     }
 }
 ```
