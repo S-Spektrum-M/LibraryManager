@@ -45,29 +45,29 @@ def list_books():
 def main():
     init('http://fbb8-73-71-55-203.ngrok.io')
     while True:
-        print('commands: checkout, return, add, owner, list')
+        print('commands: c-heckout, r-eturn, a-dd, o-wner, l-ist, q-uit')
         command = input('command: ')
-        if command == 'checkout':
+        if command == 'c':
             code = input('code: ')
             name = input('name: ')
             print(checkout(code, name))
-        elif command == 'return':
+        elif command == 'r':
             code = input('code: ')
             print(return_book(code))
-        elif command == 'add':
+        elif command == 'a':
             code = input('code: ')
             title = input('title: ')
             author = input('author: ')
             section = input('section: ')
             subsection = input('subsection: ')
             print(add_book(code, title, author, section, subsection))
-        elif command == 'owner':
+        elif command == 'o':
             code = input('code: ')
             print(owner(code))
-        elif command == 'exit':
-            break
-        elif command == 'list':
+        elif command == 'l':
             list_books()
+        elif command == 'q':
+            break
         else:
             print('invalid command')
 
