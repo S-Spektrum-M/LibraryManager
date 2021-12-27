@@ -36,7 +36,7 @@ def list_books():
 
 
 def main():
-    init('url')
+    init('http://fbb8-73-71-55-203.ngrok.io')
     while True:
         print('commands: checkout, return, add, owner, list')
         command = input('command: ')
