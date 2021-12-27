@@ -25,21 +25,31 @@ def add_book():
     FILE.close()
     """
     Add a book to the database
-    url/add?code=<code>
+    url/add?data=<code>,<title>,<author>,<section>,<subsection>
     """
-    if 'code' in request.args:
-        code = request.args['code']
-        if code not in BOOKS:
-            BOOKS[code] = {
-                'available': True,
-                'checked_out_by': 'none',
-            }
-            FILE = open('dbs/books.json', 'w')
-            json.dump(BOOKS, FILE)
-            FILE.close()
-            return jsonify({'message': 'Book added'}), 200
-        return {'error': 'Book already exists'}, 400
-    return jsonify({'error': 'Missing Data'}), 400
+    if 'data' in request.args:
+        DATA = request.args['data']
+        DATA = DATA.split(',')
+        if len(DATA) == 5:
+            CODE = DATA[0]
+            if CODE not in BOOKS:
+                TITLE = DATA[1]
+                AUTHOR = DATA[2]
+                SECTION = DATA[3]
+                SUBSECTION = DATA[4]
+                BOOKS[CODE] = {
+                    'title': TITLE,
+                    'author': AUTHOR,
+                    'section': SECTION,
+                    'subsection': SUBSECTION
+                }
+                FILE = open('dbs/books.json', 'w')
+                json.dump(BOOKS, FILE)
+                FILE.close()
+                return jsonify({'message': 'Book added'}), 200
+            return jsonify({'message': 'Book already exists'}), 400
+        return jsonify({'error': 'Missing Data'}), 400
+    return jsonify({'error': 'no data'}), 400
 
 
 @APP.route('/checkout', methods=['GET'])

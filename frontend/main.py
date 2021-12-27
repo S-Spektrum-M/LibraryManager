@@ -1,9 +1,12 @@
 from requests import get
+
 uri = str()
+
 
 def init(url):
     global uri
     uri = url
+
 
 def checkout(code, name):
     status = get(f'{uri}/checkout?data={code},{name}').json()
@@ -11,23 +14,27 @@ def checkout(code, name):
         return status['message']
     return status['error']
 
+
 def return_book(code):
     status = get(f'{uri}/return?code={code}').json()
     if 'error' not in status:
         return status['message']
     return status['error']
 
-def add_book(code):
-    status = get(f'{uri}/add?code={code}').json()
+
+def add_book(code, title, author, section, subsection):
+    status = get(f'{uri}/add?data={code},{title},{author},{section},{subsection}').json()
     if 'error' not in status:
         return status['message']
     return status['error']
+
 
 def owner(code):
     status = get(f'{uri}/owner?code={code}').json()
     if 'error' not in status:
         return status['message']
     return status['error']
+
 
 def list_books():
     book_list = get(f'{uri}/list').json()
@@ -49,7 +56,11 @@ def main():
             print(return_book(code))
         elif command == 'add':
             code = input('code: ')
-            print(add_book(code))
+            title = input('title: ')
+            author = input('author: ')
+            section = input('section: ')
+            subsection = input('subsection: ')
+            print(add_book(code, title, author, section, subsection))
         elif command == 'owner':
             code = input('code: ')
             print(owner(code))
@@ -59,6 +70,7 @@ def main():
             list_books()
         else:
             print('invalid command')
+
 
 if __name__ == '__main__':
     main()
