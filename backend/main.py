@@ -34,17 +34,13 @@ def add_book():
         if len(data) == 5:
             code = data[0]
             if code not in book_dict:
-                title = data[1]
-                author = data[2]
-                section = data[3]
-                subsection = data[4]
                 book_dict[code] = {
                     'available': True,
                     'checked_out_by': 'none',
-                    'title': title,
-                    'author': author,
-                    'section': section,
-                    'subsection': subsection
+                    'title': data[1],
+                    'author': data[2],
+                    'section': data[3],
+                    'subsection': data[4]
                 }
                 file = open('dbs/books.json', 'w')
                 json.dump(book_dict, file)
@@ -91,14 +87,16 @@ def return_book():
     file.close()
     if 'code' in request.args:
         code = request.args['code']
-        if not book_dict[code]['available']:
-            book_dict[code]['available'] = True
-            book_dict[code]['checked_out_by'] = 'none'
-            file = open('dbs/books.json', 'w')
-            json.dump(book_dict, file)
-            file.close()
-            return jsonify({'message': 'returned'}), 200
-        return jsonify({'error': 'Book Not Checked Out'}), 400
+        if code in book_dict:
+            if not book_dict[code]['available']:
+                book_dict[code]['available'] = True
+                book_dict[code]['checked_out_by'] = 'none'
+                file = open('dbs/books.json', 'w')
+                json.dump(book_dict, file)
+                file.close()
+                return jsonify({'message': 'returned'}), 200
+            return jsonify({'error': 'Book Not Checked Out'}), 400
+        return jsonify({'error':'Book does not exist'}), 400
     return jsonify({'error': 'Missing Data'}), 400
 
 
@@ -139,8 +137,8 @@ def search():
                 ret_list = []
                 for book in book_dict:
                     if book_dict[book][field] == info:
-                        ret_list.append(book_dict[book][field])
-                return jsonify(ret_list), 200
+                        ret_list.append(book_dict[book])
+                return jsonify({'message': ret_list}), 200
             return jsonify({'error': 'Bad field'}), 400
         return jsonify({'error': 'Missing Data'}), 400
     return jsonify({'error': 'Missing Data'}), 400

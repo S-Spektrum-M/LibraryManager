@@ -1,51 +1,87 @@
+"""
+Terminal frontend
+"""
 from requests import get
 
-uri = str()
+URI = str()
 
 
-def init(url):
-    global uri
-    uri = url
+def _init(url):
+    """
+    Initialize the global URI variable
+    """
+    global URI
+    URI = url
 
 
 def checkout(code, name):
-    status = get(f'{uri}/checkout?data={code},{name}').json()
+    """
+    Checkout a book
+    """
+    status = get(f'{URI}/checkout?data={code},{name}').json()
     if 'error' not in status:
         return status['message']
     return status['error']
 
 
 def return_book(code):
-    status = get(f'{uri}/return?code={code}').json()
+    """
+    Return a book
+    """
+    status = get(f'{URI}/return?code={code}').json()
     if 'error' not in status:
         return status['message']
     return status['error']
 
 
 def add_book(code, title, author, section, subsection):
-    status = get(f'{uri}/add?data={code},{title},{author},{section},{subsection}').json()
+    """
+    Add a book
+    """
+    status = get(
+        f'{URI}/add?data={code},{title},{author},{section},{subsection}').json(
+        )
     if 'error' not in status:
         return status['message']
     return status['error']
 
 
 def owner(code):
-    status = get(f'{uri}/owner?code={code}').json()
+    """
+    Get the owner of a book
+    """
+    status = get(f'{URI}/owner?code={code}').json()
     if 'error' not in status:
         return status['message']
     return status['error']
 
 
 def list_books():
-    book_list = get(f'{uri}/list').json()
+    """
+    List all books
+    """
+    book_list = get(f'{URI}/list').json()
     for code in book_list:
         print(f'{code} - {book_list[code]}')
 
 
+def search(field, info):
+    """ Search for a book """
+    status = get(f'{URI}/search?data={field},{info}').json()
+    if 'error' not in status:
+        return status['message']
+    return status['error']
+
+
 def main():
-    init('http://fbb8-73-71-55-203.ngrok.io')
+    """
+    main function
+    """
+    _init('http://localhost:8080')
     while True:
-        print('commands: c-heckout, r-eturn, a-dd, o-wner, l-ist, q-uit')
+        print(
+            'commands: c-heckout, r-eturn, a-dd, o-wner, l-ist, q-uit, s-earch'
+        )
         command = input('command: ')
         if command == 'c':
             code = input('code: ')
@@ -68,6 +104,12 @@ def main():
             list_books()
         elif command == 'q':
             break
+        elif command == 's':
+            field = input('field: ')
+            info = input('info: ')
+            search_results = search(field, info)
+            for search_result in search_results:
+                print(search_result)
         else:
             print('invalid command')
 
