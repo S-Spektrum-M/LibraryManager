@@ -1,118 +1,33 @@
 """
-Terminal frontend
+Web frontend
 """
 from requests import get
+from flask import Flask, render_template, request
 
-URI = str()
+APP = Flask(__name__)
 
 
-def _init(url):
+@APP.route('/search')
+def search():
     """
-    Initialize the global URI variable
+    Search
     """
-    global URI
-    URI = url
+    search_type = str(request.args.get('search_type')).lower()
+    search_term = str(request.args.get('search_term')).lower()
+    search_types = ['section', 'subsection', 'title', 'isbn', 'author']
+    if search_type in search_types:
+        status = get(
+            f'http://localhost:8080/search?field={search_type}&info={search_term}'
+        ).json()
+        print(status)
+        if 'error' not in status:
+            return render_template('search.html', status=status['message'][0]['title'])
+    return f"{search_type} is not valid try: {search_types}"
 
 
-def checkout(code, name):
+@APP.route('/')
+def index():
     """
-    Checkout a book
+    Index page
     """
-    status = get(f'{URI}/checkout?data={code},{name}').json()
-    if 'error' not in status:
-        return status['message']
-    return status['error']
-
-
-def return_book(code):
-    """
-    Return a book
-    """
-    status = get(f'{URI}/return?code={code}').json()
-    if 'error' not in status:
-        return status['message']
-    return status['error']
-
-
-def add_book(code, title, author, section, subsection):
-    """
-    Add a book
-    """
-    status = get(
-        f'{URI}/add?data={code},{title},{author},{section},{subsection}').json(
-        )
-    if 'error' not in status:
-        return status['message']
-    return status['error']
-
-
-def owner(code):
-    """
-    Get the owner of a book
-    """
-    status = get(f'{URI}/owner?code={code}').json()
-    if 'error' not in status:
-        return status['message']
-    return status['error']
-
-
-def list_books():
-    """
-    List all books
-    """
-    book_list = get(f'{URI}/list').json()
-    for code in book_list:
-        print(f'{code} - {book_list[code]}')
-
-
-def search(field, info):
-    """ Search for a book """
-    status = get(f'{URI}/search?data={field},{info}').json()
-    if 'error' not in status:
-        return status['message']
-    return status['error']
-
-
-def main():
-    """
-    main function
-    """
-    _init('http://localhost:8080')
-    while True:
-        print(
-            'commands: c-heckout, r-eturn, a-dd, o-wner, l-ist, q-uit, s-earch'
-        )
-        command = input('command: ')
-        if command == 'c':
-            code = input('code: ')
-            name = input('name: ')
-            print(checkout(code, name))
-        elif command == 'r':
-            code = input('code: ')
-            print(return_book(code))
-        elif command == 'a':
-            code = input('code: ')
-            title = input('title: ')
-            author = input('author: ')
-            section = input('section: ')
-            subsection = input('subsection: ')
-            print(add_book(code, title, author, section, subsection))
-        elif command == 'o':
-            code = input('code: ')
-            print(owner(code))
-        elif command == 'l':
-            list_books()
-        elif command == 'q':
-            break
-        elif command == 's':
-            field = input('field: ')
-            info = input('info: ')
-            search_results = search(field, info)
-            for search_result in search_results:
-                print(search_result)
-        else:
-            print('invalid command')
-
-
-if __name__ == '__main__':
-    main()
+    return render_template('index.html')
