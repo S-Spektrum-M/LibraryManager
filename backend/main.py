@@ -122,25 +122,19 @@ def get_owner():
 @APP.route('/search', methods=['GET'])
 def search():
     """
-    url/search?data=<field>,<info>
+    url/search?field=<field>&info=<info>
     """
     file = open('dbs/books.json', 'r')
     book_dict = json.load(file)
     file.close()
-    if 'data' in request.args:
-        data = request.args['data']
-        data = data.split(',')
-        if len(data) == 2:
-            field = data[0]
-            info = data[1]
-            if field in ['section', 'subsection', 'title', 'isbn', 'author']:
-                ret_list = []
-                for book in book_dict:
-                    if book_dict[book][field] == info:
-                        ret_list.append(book_dict[book])
-                return jsonify({'message': ret_list}), 200
-            return jsonify({'error': 'Bad field'}), 400
-        return jsonify({'error': 'Missing Data'}), 400
+    field = request.args['field']
+    info = request.args['info']
+    if field in ['section', 'subsection', 'title', 'isbn', 'author']:
+        ret_list = []
+        for book in book_dict:
+            if book_dict[book][field].lower() == info:
+                ret_list.append(book_dict[book])
+        return jsonify({'message': ret_list}), 200
     return jsonify({'error': 'Missing Data'}), 400
 
 APP.run(host="localhost", port=8080)
