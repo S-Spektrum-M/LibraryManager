@@ -1,0 +1,21 @@
+{%extends "layout.html" %} {% block body %}
+<div class="container">
+  <div class="search">
+    <form action="/search" method="get">
+      <input
+        autocomplete="off"
+        type="text"
+        name="search_type"
+        placeholder="TYPE"
+      />
+      <input
+        autocomplete="off"
+        type="text"
+        name="search_term"
+        placeholder="NAME"
+      />
+      <input type="submit" />
+    </form>
+  </div>
+</div>
+{% endblock %}
