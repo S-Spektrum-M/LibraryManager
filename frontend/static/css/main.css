@@ -3,11 +3,76 @@ div.container {
   position: relative;
 }
 
-div.container div.search {
+div.container div.child {
   margin: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+}
+
+div.container p.result {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+p.book {
+  text-align: center;
+}
+
+ul.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li.nav-item {
+  float: left;
+  display: inline;
+}
+
+li a {
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+  color: white;
+}
+
+li a:hover {
+  background-color: #fff;
+  color: black;
+}
+
+body {
+  background-color: #222;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  background-color: #aaa;
+}
+
+p.book {
+  /*font-type: cascadia code*/
+  font-family: "Cascadia Code", sans-serif;
+  color: #ddd;
+text-align : center;
+}
+
+ul.result {
+    list-style-type: none;
+}
+
+ol.book_list li {
+    color: #000;
 }
