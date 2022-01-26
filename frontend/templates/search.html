@@ -1,18 +1,18 @@
 {%extends "layout.html" %} {% block body %}
 <div class="container">
   <div class="child">
-    <form action="/search_result" method="get">
+    <form action="/result" method="get">
       <input
         autocomplete="off"
         type="text"
         name="search_type"
-        placeholder="TYPE"
+        placeholder="Search Type: section, subsection, title,  isbn,  author"
       />
       <input
         autocomplete="off"
         type="text"
         name="search_term"
-        placeholder="NAME"
+        placeholder="Query"
       />
       <input type="submit" />
     </form>
