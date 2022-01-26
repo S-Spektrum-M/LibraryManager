@@ -1,0 +1,8 @@
+{%extends "layout.html" %}
+{% block body %}
+    <ul class="book_list">
+    {% for book in book_list %}
+        <li class="book-item"><p class="book">{{ book }}</p></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
