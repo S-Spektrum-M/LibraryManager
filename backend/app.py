@@ -96,7 +96,7 @@ def return_book():
                 file.close()
                 return jsonify({'message': 'returned'}), 200
             return jsonify({'error': 'Book Not Checked Out'}), 400
-        return jsonify({'error':'Book does not exist'}), 400
+        return jsonify({'error': 'Book does not exist'}), 400
     return jsonify({'error': 'Missing Data'}), 400
 
 
@@ -136,5 +136,6 @@ def search():
                 ret_list.append(book_dict[book])
         return jsonify({'message': ret_list}), 200
     return jsonify({'error': 'Missing Data'}), 400
+
 
 APP.run(host="localhost", port=5000)
