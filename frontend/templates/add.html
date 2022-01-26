@@ -2,7 +2,7 @@
 {%extends "layout.html" %} {% block body %}
 <div class="container">
   <div class="child">
-    <form action="/addtodb" method="get">
+    <form action="/addtodb" method="post">
       <input
         autocomplete="off"
         type="text"
@@ -37,4 +37,21 @@
     </form>
   </div>
 </div>
+
+{% if message %}
+<div class="container">
+    <p class="message-s">
+        {{ message }}
+    </p>
+</div>
+{% endif %}
+
+{% if error %}
+<div class="container">
+    <p class="message-e">
+        {{ error }}
+    </p>
+</div>
+{% endif %}
+
 {% endblock %}
