@@ -1,0 +1,40 @@
+<!--TODO-->
+{%extends "layout.html" %} {% block body %}
+<div class="container">
+  <div class="child">
+    <form action="/addtodb" method="get">
+      <input
+        autocomplete="off"
+        type="text"
+        name="code"
+        placeholder="Code:"
+      />
+      <input
+        autocomplete="off"
+        type="text"
+        name="title"
+        placeholder="Title:"
+      />
+      <input
+        autocomplete="off"
+        type="text"
+        name="author"
+        placeholder="Author:"
+      />
+      <input
+        autocomplete="off"
+        type="text"
+        name="section"
+        placeholder="Section:"
+      />
+      <input
+        autocomplete="off"
+        type="text"
+        name="subsection"
+        placeholder="Subsection:"
+      />
+      <input type="submit" />
+    </form>
+  </div>
+</div>
+{% endblock %}
