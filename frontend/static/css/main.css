@@ -12,13 +12,15 @@ div.container div.child {
   transform: translate(-50%, -50%);
 }
 
-div.container p.result {
+div.container p.home-text {
   margin: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+  color: white;
+  font-family: "Cascadia Code", sans-serif;
 }
 
 p.book {
@@ -66,13 +68,23 @@ p.book {
   /*font-type: cascadia code*/
   font-family: "Cascadia Code", sans-serif;
   color: #ddd;
-text-align : center;
+  text-align: center;
 }
 
 ul.result {
-    list-style-type: none;
+  list-style-type: none;
 }
 
-ol.book_list li {
-    color: #000;
+ul.book_list {
+  list-style-type: none;
+}
+
+div p.message-s {
+  color: green;
+  font-family: "Cascadia Code", sans-serif;
+}
+
+div p.message-e {
+  color: red;
+  font-family: "Cascadia Code", sans-serif;
 }
