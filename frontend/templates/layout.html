@@ -7,9 +7,19 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/main.css') }}"
     />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
     <title>something</title>
   </head>
   <body>
+    <ul class="nav">
+      <li class="nav-item"><a href="/">Home</a></li>
+      <li class="nav-item"><a href="search">Search</a></li>
+      <li class="nav-item"><a href="add">Add</a></li>
+      <li class="nav-item"><a href="list">List</a></li>
+    </ul>
     {% block body %} {% endblock %}
   </body>
 </html>
