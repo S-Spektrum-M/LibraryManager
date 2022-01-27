@@ -60,7 +60,7 @@ def list_books():
     return render_template('list.html', book_list=book_list)
 
 
-@APP.route('/addtodb', methods=['POST'])
+@APP.route('/add', methods=['POST'])
 def add_book():
     """
     Add book to database
@@ -77,6 +77,43 @@ def add_book():
         return render_template('add.html', message=status['message'])
     return render_template('add.html', error=status['error'])
 
+@APP.route('/checkout')
+def checkout():
+    """
+    Checkout book
+    """
+    return render_template('checkout.html')
+
+@APP.route('/checkout', methods=['POST'])
+def checkout_book():
+    """
+    checkout_book
+    """
+    status = get(
+        f'http://localhost:5000/checkout?data={str(request.form.get("code"))},{request.form.get("user_id")}'
+    ).json()
+    if 'error' not in status:
+        return render_template('checkout.html', message=status['message'])
+    return render_template('checkout.html', error=status['error'])
+
+@APP.route('/return')
+def return_book():
+    """
+    Return book
+    """
+    return render_template('return.html')
+
+@APP.route('/return', methods=['POST'])
+def return_page():
+    """
+    Return book
+    """
+    status = get(
+        f'http://localhost:5000/return?code={str(request.form.get("code"))}'
+    ).json()
+    if 'error' not in status:
+        return render_template('return.html', message=status['message'])
+    return render_template('return.html', error=status['error'])
 
 @APP.route('/')
 def index():

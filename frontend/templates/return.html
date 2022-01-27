@@ -1,8 +1,17 @@
 {%extends "layout.html" %}
 {% block body %}
 <div class="container">
-    <p class="home-text">
-        Return Page
-    </p>
+  <div class="child">
+      <form action="/return" method="post">
+      <input
+        autocomplete="off"
+        type="text"
+        name="code"
+        placeholder="Code:"
+      />
+      <input type="submit" />
+    </form>
+  </div>
+</div>
 </div>
 {% endblock %}

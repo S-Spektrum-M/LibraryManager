@@ -1,8 +1,38 @@
 {%extends "layout.html" %}
 {% block body %}
 <div class="container">
-    <p class="home-text">
-        Return Page
+  <div class="child">
+      <form action="/checkout" method="post">
+      <input
+        autocomplete="off"
+        type="text"
+        name="code"
+        placeholder="Code:"
+      />
+      <input
+        autocomplete="off"
+        type="text"
+        name="user_id"
+        placeholder="Your Name:"
+      />
+      <input type="submit" />
+    </form>
+  </div>
+</div>
+
+{% if message %}
+<div class="container">
+    <p class="message-s">
+        {{ message }}
     </p>
 </div>
+{% endif %}
+
+{% if error %}
+<div class="container">
+    <p class="message-e">
+        {{ error }}
+    </p>
+</div>
+{% endif %}
 {% endblock %}
