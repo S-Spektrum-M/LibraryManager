@@ -16,7 +16,11 @@ def list_books():
     file = open('dbs/books.json', 'r')
     book_dict = json.load(file)
     file.close()
-    return jsonify(book_dict), 200
+    ret_dict = {}
+    for code in book_dict:
+        if  book_dict[code]['available']:
+            ret_dict[code] = book_dict[code]
+    return jsonify(ret_dict), 200
 
 
 @APP.route('/add', methods=['GET'])
