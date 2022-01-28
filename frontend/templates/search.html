@@ -1,23 +1,28 @@
 {%extends "layout.html" %} {% block body %}
-<div class="container">
-  <div class="child">
-    <form action="/result" method="get">
-      <input
-        autocomplete="off"
-        type="text"
-        name="search_type"
-        placeholder="Search Type: section, subsection, title,  isbn,  author"
-      />
-      <input
-        autocomplete="off"
-        type="text"
-        name="search_term"
-        placeholder="Query"
-      />
-      <input type="submit" />
-    </form>
-  </div>
-</div>
+    <div class="container">
+      <div class="child">
+        <form action="/result" method="get">
+          <input
+            autocomplete="off"
+            type="text"
+            name="search_type"
+            placeholder="Search Type: section, subsection, title,  isbn,  author"
+          />
+          <input
+            autocomplete="off"
+            type="text"
+            name="search_term"
+            placeholder="Query"
+          />
+          <input type="submit" />
+        </form>
+      </div>
+    </div>
 {% endblock %}
 {% block status%}
+    <ul class="result">
+    {% for book in status%}
+        <li class="book-item"><p class="book">{{ book }}</p></li>
+    {% endfor %}
+    </ul>
 {% endblock %}
