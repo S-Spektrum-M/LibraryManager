@@ -23,13 +23,14 @@ def result():
             response_str = []
             status = status['message']
             print(status)
-            for book in status:
-                response_str.append(book['title'])
+            for code in status:
+                response_str.append(f"{code}: {status[code]['title']}")
             if len(response_str) > 0:
-                return render_template('result.html', status=response_str)
-            return render_template('result.html', status=["No Books Found"])
+                return render_template('search.html', status=response_str)
+            return render_template('search.html', status=["No Books Found"])
         print(status['error'])
-    return f"{search_type} is not valid try: {search_types}"
+    bnf = f"{search_type} is not valid try: {search_types}"
+    return render_template('search.html', status=[bnf])
 
 
 @APP.route('/search')
