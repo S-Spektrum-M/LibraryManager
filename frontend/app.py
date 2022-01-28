@@ -15,6 +15,7 @@ def result():
     search_type = str(request.args.get('search_type')).lower().strip()
     search_term = str(request.args.get('search_term')).lower().strip()
     search_types = ['section', 'subsection', 'title', 'isbn', 'author']
+    BNF_STR = 'Section, Subsection, Title, ISBN, Author'
     if search_type in search_types:
         status = get(
             f'http://localhost:5000/search?field={search_type}&info={search_term}'
@@ -29,7 +30,7 @@ def result():
                 return render_template('search.html', status=response_str)
             return render_template('search.html', status=["No Books Found"])
         print(status['error'])
-    bnf = f"{search_type} is not valid try: {search_types}"
+    bnf = f"{search_type} is not valid try: {BNF_STR}"
     return render_template('search.html', status=[bnf])
 
 
@@ -91,24 +92,22 @@ def checkout_book():
     checkout_book
     """
     status = get(
-        f'http://localhost:5000/checkout?data={str(request.form.get("code"))},{request.form.get("user_id")}'
+        'http://localhost:5000/checkout?data={},{}'.format(
+            request.form.get("code"),
+            request.form.get("user_id")
+        )
     ).json()
     if 'error' not in status:
         return render_template('checkout.html', message=status['message'])
     return render_template('checkout.html', error=status['error'])
 
-@APP.route('/return')
+@APP.route('/return', methods=['GET', 'POST'])
 def return_book():
     """
     Return book
     """
-    return render_template('return.html')
-
-@APP.route('/return', methods=['POST'])
-def return_page():
-    """
-    Return book
-    """
+    if request.method == 'GET':
+        return render_template('return.html')
     status = get(
         f'http://localhost:5000/return?code={str(request.form.get("code"))}'
     ).json()
