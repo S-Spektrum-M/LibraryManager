@@ -134,10 +134,10 @@ def search():
     field = request.args['field']
     info = request.args['info']
     if field in ['section', 'subsection', 'title', 'isbn', 'author']:
-        ret_list = []
+        ret_list = {}
         for book in book_dict:
             if book_dict[book][field].lower() == info:
-                ret_list.append(book_dict[book])
+                ret_list[book] = book_dict[book]
         return jsonify({'message': ret_list}), 200
     return jsonify({'error': 'Missing Data'}), 400
 
