@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/main.css') }}"
+      href="{{ url_for('static', filename='css/dark.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/light.css') }}"
     />
     <link
       rel="shortcut icon"
@@ -22,7 +26,6 @@
       <li class="nav-item"><a href="checkout">Checkout</a></li>
       <li class="nav-item"><a href="return">Return</a></li>
     </ul>
-    {% block body %} {% endblock %}
-    {% block status %}{% endblock %}
+    {% block body %} {% endblock %} {% block status %}{% endblock %}
   </body>
 </html>
