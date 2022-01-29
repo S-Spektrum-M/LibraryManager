@@ -5,7 +5,7 @@ from requests import get
 from flask import Flask, render_template, request
 
 APP = Flask(__name__)
-
+APP.secret_key = "KEY"
 
 @APP.route('/result')
 def result():
@@ -15,7 +15,7 @@ def result():
     search_type = str(request.args.get('search_type')).lower().strip()
     search_term = str(request.args.get('search_term')).lower().strip()
     search_types = ['section', 'subsection', 'title', 'isbn', 'author']
-    BNF_STR = 'Section, Subsection, Title, ISBN, Author'
+    bnf_str = 'Section, Subsection, Title, ISBN, Author'
     if search_type in search_types:
         status = get(
             f'http://localhost:5000/search?field={search_type}&info={search_term}'
@@ -30,7 +30,7 @@ def result():
                 return render_template('search.html', status=response_str)
             return render_template('search.html', status=["No Books Found"])
         print(status['error'])
-    bnf = f"{search_type} is not valid try: {BNF_STR}"
+    bnf = f"{search_type} is not valid try: {bnf_str}"
     return render_template('search.html', status=[bnf])
 
 
@@ -79,27 +79,26 @@ def add_book():
         return render_template('add.html', message=status['message'])
     return render_template('add.html', error=status['error'])
 
-@APP.route('/checkout')
+
+@APP.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     """
     Checkout book
     """
     return render_template('checkout.html')
 
+
 @APP.route('/checkout', methods=['POST'])
 def checkout_book():
     """
     checkout_book
     """
-    status = get(
-        'http://localhost:5000/checkout?data={},{}'.format(
-            request.form.get("code"),
-            request.form.get("user_id")
-        )
-    ).json()
+    status = get('http://localhost:5000/checkout?data={},{}'.format(
+        request.form.get("code"), request.form.get("user_id"))).json()
     if 'error' not in status:
         return render_template('checkout.html', message=status['message'])
     return render_template('checkout.html', error=status['error'])
+
 
 @APP.route('/return', methods=['GET', 'POST'])
 def return_book():
@@ -109,11 +108,15 @@ def return_book():
     if request.method == 'GET':
         return render_template('return.html')
     status = get(
-        f'http://localhost:5000/return?code={str(request.form.get("code"))}'
+        'http://localhost:5000/return?code={},{}'.format(
+            request.form.get("code"),
+            request.form.get("user_id")
+        )
     ).json()
     if 'error' not in status:
         return render_template('return.html', message=status['message'])
     return render_template('return.html', error=status['error'])
+
 
 @APP.route('/')
 def index():
