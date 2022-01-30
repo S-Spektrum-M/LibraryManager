@@ -124,3 +124,11 @@ def index():
     Index page
     """
     return render_template('index.html')
+
+@APP.errorhandler(404)
+def handle404(err):
+    return render_template('index.html',  error=404), 404
+
+@APP.errorhandler(500)
+def handle500(err):
+    return render_template('index.html',  error=500), 500
