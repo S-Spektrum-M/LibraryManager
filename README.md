@@ -1,3 +1,5 @@
+# LibraryManager
+## API-DOCS
 ```json
 {
     "code": {
@@ -6,4 +8,10 @@
     }
 }
 ```
-# LibraryManager
+
+## Dependencies
+
+```
+flask
+requests
+```
