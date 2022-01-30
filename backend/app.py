@@ -18,7 +18,7 @@ def list_books():
     file.close()
     ret_dict = {}
     for code in book_dict:
-        if  book_dict[code]['available']:
+        if book_dict[code]['available']:
             ret_dict[code] = book_dict[code]
     return jsonify(ret_dict), 200
 
