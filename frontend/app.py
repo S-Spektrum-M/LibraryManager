@@ -85,19 +85,12 @@ def checkout():
     """
     Checkout book
     """
-    return render_template('checkout.html')
-
-
-@APP.route('/checkout', methods=['POST'])
-def checkout_book():
-    """
-    checkout_book
-    """
     status = get('http://localhost:5000/checkout?data={},{}'.format(
         request.form.get("code"), request.form.get("user_id"))).json()
     if 'error' not in status:
         return render_template('checkout.html', message=status['message'])
     return render_template('checkout.html', error=status['error'])
+    return render_template('checkout.html')
 
 
 @APP.route('/return', methods=['GET', 'POST'])
