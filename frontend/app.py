@@ -118,20 +118,14 @@ def return_book():
     return render_template('return.html', error=status['error'])
 
 
+@APP.errorhandler(500)
+@APP.errorhandler(404)
 @APP.route('/')
-def index():
+def index(err=None):
     """
     Index page
     """
-    return render_template('index.html')
-
-@APP.errorhandler(404)
-def handle404(err):
-    return render_template('index.html',  error=404), 404
-
-@APP.errorhandler(500)
-def handle500(err):
-    return render_template('index.html',  error=500), 500
+    return render_template('index.html', error=err), 200
 
 if __name__ == "__main__":
     APP.run(host="localhost", port=8080)
