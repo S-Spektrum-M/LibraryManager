@@ -132,3 +132,6 @@ def handle404(err):
 @APP.errorhandler(500)
 def handle500(err):
     return render_template('index.html',  error=500), 500
+
+if __name__ == "__main__":
+    APP.run(host="localhost", port=8080)

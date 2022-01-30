@@ -142,4 +142,5 @@ def search():
     return jsonify({'error': 'Missing Data'}), 400
 
 
-APP.run(host="localhost", port=5000)
+if __name__ == "__main__":
+    APP.run(host="localhost", port=5000)
