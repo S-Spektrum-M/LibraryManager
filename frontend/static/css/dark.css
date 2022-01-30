@@ -46,6 +46,7 @@
     padding: 8px;
     text-decoration: none;
     color: white;
+    font-family: "Cascadia Code", sans-serif;
   }
 
   li a:hover {
