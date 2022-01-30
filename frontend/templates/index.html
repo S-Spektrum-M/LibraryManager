@@ -1,19 +1,11 @@
 {%extends "layout.html" %}
 {% block body %}
     {% if error %}
-        {% if error == 404 %}
-            <div class="container">
-                <p class="home-text">
-                    Hmm... I can't find that page
-                </p>
-            </div>
-        {% else %}
-            <div class="container">
-                <p class="home-text">
-                    Hmm... Something is broken here
-                </p>
-            </div>
-        {% endif %}
+        <div class="container">
+            <p class="home-text">
+                {{error}}
+            </p>
+        </div>
     {% else %}
         <div class="container">
             <p class="home-text">
